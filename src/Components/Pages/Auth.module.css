@@ -1,0 +1,185 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 15px;
+}
+
+.authCard {
+  background: #fff;
+  width: 100%;
+  max-width: 440px; /* Slightly wider for grid */
+  padding: 30px; /* Padding kam ki height bachane ke liye */
+  border-radius: 24px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+.authCard h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+
+/* Compact Grid for Email & City */
+.gridInputs {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 12px;
+}
+
+.googleBtn {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.divider {
+  margin: 15px 0;
+  text-align: center;
+  border-bottom: 1px solid #f3f4f6;
+  line-height: 0.1em;
+}
+
+.divider span {
+  background: #fff;
+  padding: 0 10px;
+  color: #9ca3af;
+  font-size: 0.75rem;
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Gap kam kiya */
+}
+
+.inputGroup label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.phoneInput {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.phoneInput span {
+  padding: 0 12px;
+  background: #f9fafb;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.phoneInput input {
+  border: none !important;
+}
+
+.submitBtn {
+  background: #002147;
+  color: #fff;
+  padding: 13px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.errorMessage {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.toggleText {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.toggleText span {
+  color: #002147;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f3f4f6;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* reCAPTCHA Badge ko hide karne ke liye */
+:global(.grecaptcha-badge) { 
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  display: none !important; /* Forcefully hide */
+}
+
+/* Recaptcha Container ko flow se bahar rakhne ke liye */
+#recaptcha-container {
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  z-index: -1;
+}
+
+/* Mobile Fix */
+@media (max-width: 400px) {
+  .gridInputs {
+    grid-template-columns: 1fr;
+  }
+  .authCard {
+    padding: 20px;
+  }
+}

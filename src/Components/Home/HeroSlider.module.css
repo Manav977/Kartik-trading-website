@@ -1,0 +1,148 @@
+.sliderContainer {
+  width: 100%;
+  background: #ffffff;
+  padding: 80px 0; /* Space badha di taaki khali na lage */
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero {
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  min-height: 450px;
+  gap: 30px;
+}
+
+/* Flexbox for Left-Right Layout */
+.heroContentWrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.imageSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sliderImage {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  max-height: 450px;
+  object-fit: contain;
+  /* Premium Shadow */
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.1));
+  transition: all 0.5s ease-in-out;
+}
+
+.infoSection {
+  flex: 1.2;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.productTitle {
+  font-size: 2.8rem;
+  color: #111;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.price {
+  font-size: 1.8rem;
+  color: #000;
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+.description {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+  max-width: 450px;
+}
+
+/* --- The Main Button --- */
+.btnContainer {
+  margin-top: 25px;
+}
+
+.heroBtn {
+  display: inline-block;
+  padding: 16px 40px;
+  background-color: #000;
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 4px; /* Sharp professional look */
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.heroBtn:hover {
+  background-color: #333;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Navigation Buttons */
+.navBtn {
+  background: #f1f1f1;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+.navBtn:hover {
+  background: #000;
+  color: #fff;
+}
+
+.dots {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.dot { cursor: pointer; color: #ddd; font-size: 10px; }
+.dot.active { color: #000; }
+
+/* Responsive Code */
+@media (max-width: 968px) {
+  .heroContentWrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+  .infoSection {
+    align-items: center;
+    text-align: center;
+  }
+  .productTitle { font-size: 2rem; }
+  .sliderImage { max-width: 300px; }
+  .navBtn { display: none; } /* Mobile pe buttons hata diye for clean look */
+}

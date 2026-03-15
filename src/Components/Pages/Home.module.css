@@ -1,0 +1,49 @@
+.productShortcut {
+  padding: 80px 20px;
+  background-color: #ffffff; /* Clean white background */
+  text-align: center;
+}
+
+.contentBox h2 {
+  font-size: 2.2rem;
+  color: #111;
+  margin-bottom: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.contentBox p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 35px;
+}
+
+.mainActionBtn {
+  display: inline-block;
+  padding: 18px 45px;
+  background-color: #000; /* Pure Black */
+  color: #fff !important; /* Pure White Text */
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 4px; /* Professional sharp edges */
+  transition: all 0.3s ease;
+  border: 2px solid #000;
+}
+
+.mainActionBtn:hover {
+  background-color: transparent;
+  color: #000 !important;
+  transform: translateY(-2px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .productShortcut {
+    padding: 50px 15px;
+  }
+  .contentBox h2 {
+    font-size: 1.6rem;
+  }
+}

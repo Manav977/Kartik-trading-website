@@ -1,0 +1,110 @@
+/* Container ko flexible banaya */
+.about {
+  min-height: 100vh; /* Fixed 100vh ki jagah min-height taaki content badhne par height apne aap badh jaye */
+  width: 100%; /* 98.9vw ki jagah 100% taaki horizontal scroll na aaye */
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 4rem; /* Neeche thodi space dene ke liye */
+  box-sizing: border-box;
+}
+
+.heading {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 45rem; /* Text ko thoda failne ki jagah di */
+  text-align: center; /* Mobile par text center karne ke liye */
+  padding: 0 1rem;
+  gap: 1rem; /* Elements ke beech automatically space aayega */
+}
+
+.heading span {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.heading p {
+  font-size: 1.2rem;
+  color: #211F1CBF;
+  line-height: 1.6;
+}
+
+/* Image aur Text wale container ka layout */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4rem;
+  gap: 3rem; /* Image aur text ke beech ka gap */
+}
+
+/* Image ko responsive banaya */
+.container img {
+  width: 100%;
+  height: 100%;
+  max-width: 35rem; /* Badi screens par maximum 35rem tak hi jayega */
+  height: auto; /* Height apne aap ratio ke hisaab se adjust hogi */
+  object-fit: cover;
+  border-radius: 8px; /* Thoda premium look dene ke liye (optional) */
+}
+
+.container div {
+  width: 100%;
+  max-width: 35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.container div h1 {
+  font-size: 2.2rem;
+  margin: 0;
+  color: #111;
+}
+
+.container div p {
+  font-size: 1.1rem;
+  color: #211F1CBF;
+  line-height: 1.6;
+}
+
+/* =========================================
+   Mobile aur Tablet ke liye Responsive Code
+   ========================================= */
+
+@media (max-width: 900px) {
+  /* Tablet aur Mobile screens par column layout ho jayega */
+  .container {
+    flex-direction: column;
+    text-align: center; /* Text center mein aayega */
+  }
+
+  .container div {
+    align-items: center; /* Heading aur text center align honge */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Chote mobiles par font size thoda chota kar diya */
+  .heading {
+    margin-top: 2rem;
+  }
+  
+  .heading span {
+    font-size: 2.2rem;
+  }
+  
+  .heading p, .container div p {
+    font-size: 1rem;
+  }
+  
+  .container div h1 {
+    font-size: 1.8rem;
+  }
+}

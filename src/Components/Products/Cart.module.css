@@ -1,0 +1,261 @@
+/* Background Blur Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px); /* Background blur effect */
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.activeOverlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Side Drawer */
+.cartDrawer {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Shuruat mein screen se bahar */
+  width: 400px;
+  height: 100%;
+  background: #fff;
+  z-index: 2001;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  transition: right 0.4s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.open {
+  right: 0; /* Click karne par screen par aa jayega */
+}
+
+/* Header */
+.header {
+  padding: 0.75rem 1rem ;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Items List */
+.cartContent {
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
+}
+
+.cartItem {
+  display: flex;
+  justify-content: space-around;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.cartImg {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.details{
+  width: 12rem;
+}
+
+.details h4 {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.controls button {
+  width: 25px;
+  height: 25px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+}
+
+.remove {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #ccc;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Footer & Checkout */
+.footer {
+  padding: 20px;
+  border-top: 1px solid #eee;
+  background: #fff;
+}
+
+.totalSection {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.checkoutBtn {
+  width: 100%;
+  padding: 15px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.closeBtn {
+  cursor: pointer;
+  position: relative;
+  z-index: 2010; /* Overlay se upar */
+  background: none;
+  border: none;
+  font-size: 24px;
+  padding: 10px;
+  pointer-events: all; /* Ensure click kaam kare */
+}
+
+.closeBtn:hover {
+  transform: scale(1.2);
+  color: #ff0000; /* Hover par laal ho jayega */
+}
+
+/* Empty Cart Container */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Cart drawer ke beech mein dikhane ke liye */
+  text-align: center;
+  padding: 20px;
+}
+
+/* "Aapka cart khaali hai" Text */
+.empty p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4b5563; /* Subtle Grey */
+  margin-bottom: 25px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Isko empty text ke upar icon ki tarah use kar sakte ho (Optional) */
+.empty::before {
+  content: '🛒'; /* Cart Emoji ya koi icon */
+  font-size: 50px;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+/* Shopping Karein Button */
+.shopBtn {
+  padding: 12px 30px;
+  background-color: #002147; /* Navy Blue Theme */
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 33, 71, 0.15);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Button Hover Effect */
+.shopBtn:hover {
+  background-color: #00152e; /* Thoda dark navy */
+  transform: translateY(-3px); /* Lift effect */
+  box-shadow: 0 8px 20px rgba(0, 33, 71, 0.25);
+}
+
+/* Button Active Effect */
+.shopBtn:active {
+  transform: translateY(0);
+}
+
+/* Overlay clickable hona chahiye */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: none; /* Default band */
+  pointer-events: auto;
+}
+
+.activeOverlay {
+  display: block; /* Drawer khulne par show hoga */
+}
+
+.cartDrawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 400px;
+  height: 100%;
+  background: #fff;
+  z-index: 2001;
+  transition: 0.4s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.open {
+  right: 0;
+}
+
+.removeIcon{
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: end;
+  background-color: transparent;
+  border: none;
+  font-size: 1.4rem;
+}
+
+@media (max-width: 480px) {
+  .cartDrawer {
+    width: 100%; /* Mobile par full screen cart */
+  }
+}

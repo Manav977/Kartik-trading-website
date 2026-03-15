@@ -1,0 +1,187 @@
+/* Footer ko 100vh height di hai */
+.footer {
+  background-color: #222221;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  min-height: 100vh; /* Ye screen ki poori height lega */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container ko flex: 1 dekar space ko distribute kiya hai */
+.container {
+  flex: 1; /* Container poori available height le lega */
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 60px 20px 40px; /* Top aur bottom padding */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Saare sections (Top, Middle, Contact, Bottom) barabar doori par aayenge */
+  box-sizing: border-box;
+}
+
+/* Top Section: Logo & Nav */
+.topSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* Margin-bottom hata diya hai kyunki justify-content: space-between handle karega */
+}
+
+.logo {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #c4c4c4;
+  line-height: 1.4;
+}
+
+.navLinks {
+  display: flex;
+  gap: 30px;
+}
+
+.navLinks a {
+  color: #9e9e9e;
+  text-decoration: none;
+  font-size: 15px;
+  transition: color 0.3s ease;
+}
+
+.navLinks a:hover {
+  color: #ffffff;
+}
+
+/* Middle Section: Huge Text & Social */
+.middleSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hugeText {
+  font-size: 56px; /* Text thoda bada kiya hai taaki 100vh mein accha lage */
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+  color: #ffffff;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 15px;
+}
+
+.socialIcons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border: 1px solid #555;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 4px; /* Halka sa rounded corner */
+  transition: all 0.3s ease;
+}
+
+.socialIcons a:hover {
+  background-color: #ffffff;
+  color: #222221;
+}
+
+/* Contact Section */
+.contactSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.emailBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emailLabel {
+  color: #7a7a7a;
+  font-size: 14px;
+}
+
+.emailAddress {
+  color: #9e9e9e;
+  font-size: 32px; /* Thoda highlight kiya hai */
+  text-decoration: none;
+  font-weight: 300;
+  transition: color 0.3s ease;
+}
+
+.emailAddress:hover {
+  color: #ffffff;
+}
+
+.contactBtn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 14px 35px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.contactBtn:hover {
+  background-color: #ffffff;
+  color: #222221;
+}
+
+/* Bottom Copyright Bar */
+.bottomBar {
+  border-top: 1px solid #3a3a3a;
+  padding-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #7a7a7a;
+}
+
+.legalLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.legalLinks a {
+  color: #7a7a7a;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.legalLinks a:hover {
+  color: #ffffff;
+}
+
+/* Mobile Responsiveness (Small screens par height auto ho jayegi aur items stack honge) */
+@media (max-width: 900px) {
+  .container {
+    gap: 50px; /* Mobile par space-between ki jagah fixed gap kaam aayega */
+    justify-content: flex-start;
+  }
+
+  .topSection, .middleSection, .contactSection, .bottomBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+  }
+  
+  .hugeText {
+    font-size: 40px;
+  }
+
+  .navLinks {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}

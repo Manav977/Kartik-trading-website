@@ -1,0 +1,112 @@
+.sectionWrapper {
+  max-width: 1200px;
+  margin: 6rem auto; /* Upar aur neeche margin */
+  padding: 0 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* --- Text Section --- */
+.textContainer {
+  max-width: 600px; /* Text ko left side mein restrict karne ke liye jaisa photo mein hai */
+  margin-bottom: 4rem;
+}
+
+.heading {
+  font-size: 3.5rem;
+  font-weight: 400; /* Patla font jaisa design mein hai */
+  color: #1a1a1a;
+  line-height: 1.1;
+  margin: 0 0 1.5rem 0;
+}
+
+.subtext {
+  font-size: 1.1rem;
+  color: #555555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- Grid Section --- */
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 barabar columns */
+  gap: 30px; /* Cards ke beech ka gap */
+}
+
+/* Light Gray Card */
+.card {
+  background-color: #EBEBEB; /* Photo se match karta hua light gray color */
+  aspect-ratio: 4 / 5; /* Card ko slightly lamba rectangle banayega */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px); /* Hover karne par thoda upar uthega */
+  cursor: pointer;
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Image kate na, poori card mein fit ho */
+  mix-blend-mode: multiply; /* Agar image ka white background hai, toh wo gray mein blend ho jayega */
+}
+
+.loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 4rem 0;
+  color: #888;
+}
+
+/* =========================================
+   Mobile & Tablet Responsiveness
+   ========================================= */
+@media (max-width: 900px) {
+  .heading {
+    font-size: 2.8rem;
+  }
+  
+  .textContainer {
+    max-width: 100%;
+    text-align: center; /* Tablet par text center acha lagta hai */
+  }
+
+  .gridContainer {
+    grid-template-columns: repeat(2, 1fr); /* Tablet par 2 columns */
+  }
+}
+
+@media (max-width: 600px) {
+  .sectionWrapper {
+    margin: 3rem auto;
+    padding: 0 15px; /* Wrapper ki padding set ki */
+  }
+
+  .heading {
+    font-size: 2.2rem;
+  }
+
+  .subtext {
+    font-size: 1rem;
+  }
+
+  .gridContainer {
+    grid-template-columns: 1fr; 
+    gap: 25px;
+    justify-items: center; 
+  }
+
+  .card {
+    width: 100%;
+    max-width:320px; /* Card ki maximum width restrict kar di */
+    aspect-ratio: 1 / 1.1; /* Slightly vertical rectangle, mobile par badiya lagta hai */
+    padding: 1rem;
+  }
+}

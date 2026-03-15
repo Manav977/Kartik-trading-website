@@ -1,0 +1,199 @@
+/* General settings */
+.mainWrapper {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  color: #333;
+}
+
+/* Blurred background image pseudo-element */
+.testimonialSection {
+  position: relative;
+  width: 100%;
+  height: 65vh; 
+  overflow: hidden; /* Ye zaroori hai taaki 120% background bahar na dikhe */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.testimonialSection::before {
+  content: "";
+  position: absolute;
+  top: -5%; 
+  left: -5%;
+  width: 110%; /* 120% se ghatakar 110% kiya taaki overflow kam ho */
+  height: 110%;
+  background-image: url("https://images.unsplash.com/photo-1506617420156-8e4536971650?q=80&w=2000&auto=format&fit=crop");
+  background-size: cover; /* Ye missing tha, isse image stretch nahi hogi */
+  background-position: center;
+  filter: blur(5px) brightness(0.8);
+  z-index: 1;
+}
+
+.testimonialContainer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 30px;
+  width: 100%; /* Auto ki jagah 100% */
+  max-width: 1200px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.testimonialCard {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 450px; /* Limit card width */
+  padding: 40px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.quoteText {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.customerName {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.customerRole {
+  font-size: 14px;
+  color: #7a7a7a;
+  text-align: center;
+}
+
+/* --- Newsletter Section --- */
+.newsletterSection {
+  background-color: #ffffff;
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px; /* Space between newsletter form and bottom button */
+}
+
+.newsletterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.newsletterHeading {
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.subscriptionForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 600px; /* Limit form width */
+}
+
+.emailInput {
+  flex: 1;
+  padding: 14px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.subscribeBtn {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 14px 28px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.subscribeBtn:hover {
+  background-color: #333333;
+}
+
+/* --- Persistent Bottom Button Section --- */
+.bottomLinkContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.bottomLinkBtn {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 14px 28px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.bottomLinkBtn:hover {
+  background-color: #333333;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+  .testimonialSection {
+    height: auto;
+    min-height: 50vh; /* Mobile par height content ke hisaab se adjust hogi */
+    padding: 40px 0;
+    overflow: hidden; /* Double check for extra width */
+  }
+
+  .testimonialContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0 15px; /* Side padding kam ki taaki card bada dikhe */
+    width: 100%;
+    overflow: hidden; /* Extra safety */
+  }
+
+  .testimonialCard {
+    width: 95%; /* 100% se thoda kam taaki margins rahein */
+    max-width: 100%;
+    padding: 30px 20px; /* Mobile par padding thodi kam */
+    margin-bottom: 0; 
+  }
+
+  .subscriptionForm {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .emailInput {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .subscribeBtn {
+    width: 100%; /* Mobile par button full width badiya lagta hai */
+  }
+}

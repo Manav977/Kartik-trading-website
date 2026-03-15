@@ -1,0 +1,184 @@
+.contactContainer {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.headerSection {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.headerSection h1 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.headerSection p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* Main Layout */
+.mainContent {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 50px;
+  align-items: flex-start;
+}
+
+/* Left Side: Info */
+.infoSide {
+  flex: 1;
+}
+
+.infoSide h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.infoSide p {
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contactDetail {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.contactDetail span {
+  font-weight: 1000;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: #000;
+  display: block;
+}
+
+/* Right Side: Form */
+.formSide {
+  flex: 1.5;
+  background: #fff;
+  padding: 3rem;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.formSide h3 {
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 20px;
+}
+
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.field input, .field textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.field input:focus, .field textarea:focus {
+  border-color: #333;
+}
+
+/* Button Style */
+.sendBtn {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  align-self: flex-end; /* Buttons right side pe */
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.sendBtn:hover {
+  background-color: #333;
+}
+
+.statusMsg {
+  margin-top: 15px;
+  text-align: right;
+  font-weight: 500;
+}
+
+/* Map Section */
+.mapSection {
+  margin-top: 50px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mainContent {
+    flex-direction: column;
+  }
+
+  .inputGroup {
+    flex-direction: column;
+  }
+  .headerSection h1 {
+    font-size: 2rem;
+  }
+  
+  .contactContainer{
+    margin-top: 5rem;
+  }
+
+  .formSide{
+    width: 80%;
+    padding: 2rem;
+  }
+
+   .infoSide h2{
+    margin-bottom: 1.3rem;
+   }
+
+      .infoSide p{
+    margin-bottom: 1.3rem;
+   }
+
+  .inputGroup{
+    width: 100%;
+  }
+}
