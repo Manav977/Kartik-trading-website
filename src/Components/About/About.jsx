@@ -10,7 +10,7 @@ const About = () => {
       <div className={classes.heading}>
         <span>About Our Store</span>
         <p>
-          Discover the story behind FreshMart Kiryana Store — your trusted
+          Discover the story behind Kartik Trading Co. — your trusted
           neighborhood grocery store where quality meets affordability. We
           provide fresh, daily-use essentials to make your home life easier and
           healthier.
@@ -22,7 +22,7 @@ const About = () => {
 
         <h1>Our Mission</h1>
         <p>
-          At FreshMart Kiryana Store, our mission is to provide high-quality
+          At Kartik Trading Co. , our mission is to provide high-quality
           grocery products at affordable prices for every household. We believe
           that good food and daily essentials should always be fresh,
           accessible, and reliable.

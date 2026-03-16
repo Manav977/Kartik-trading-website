@@ -59,9 +59,9 @@ function HeroSlider() {
           {/* Right Side: Product Details */}
           <div className={`${classes.infoSection} ${isImageLoaded ? classes.fadeIn : classes.hidden}`}>
             <h1 className={classes.productTitle}>{products[index].title}</h1>
-            <h2 className={classes.price}>
+            {/* <h2 className={classes.price}>
               Wholesale Rate: ₹{products[index].price || "Contact for Price"}
-            </h2>
+            </h2> */}
             <p className={classes.description}>{products[index].description}</p>
             
             <div className={classes.btnContainer}>

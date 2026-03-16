@@ -109,6 +109,7 @@
 
 .phoneInput input {
   border: none !important;
+  outline: none;
 }
 
 .submitBtn {
@@ -159,7 +160,7 @@
 
 /* reCAPTCHA Badge ko hide karne ke liye */
 :global(.grecaptcha-badge) { 
-  visibility: hidden !important;
+  /* visibility: hidden !important; */
   opacity: 0 !important;
   pointer-events: none !important;
   display: none !important; /* Forcefully hide */
@@ -172,6 +173,28 @@
   width: 0;
   height: 0;
   z-index: -1;
+}
+
+.successMessage {
+  background-color: #e6fffa;
+  color: #2c7a7b;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid #b2f5ea;
+}
+
+.errorMessage {
+  background-color: #fff5f5;
+  color: #c53030;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid #feb2b2;
 }
 
 /* Mobile Fix */

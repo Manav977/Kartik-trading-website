@@ -60,7 +60,7 @@ const sendEmail = (e) => {
               <div className={styles.contactDetail}>
                 <div>
                   <span>EMAIL</span>
-                  <p>support@kartiktrading.com</p>
+                  <p>kartiktradingcompany@gmail.com</p>
                 </div>
               </div>
               <div className={styles.contactDetail}>
@@ -134,7 +134,7 @@ const sendEmail = (e) => {
       <div className={styles.mapSection}>
         <iframe
           title="Kartik Trading Location"
-          src="https://www.google.com/maps?q=KartikTradingCompany&output=embed"
+          src="https://www.google.com/maps?q=KartikTradingCompanypatiala&output=embed"
           width={1200}
           height="350"
           style={{ border: 0 }}

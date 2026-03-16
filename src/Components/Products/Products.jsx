@@ -71,7 +71,7 @@ function Products({ onAddToCart, searchTerm = "", selectedCategory = "All" }) {
                     <h3 className={styles.title}>
                       {item?.title || "No Title"}
                     </h3>
-                    <p className={styles.price}>₹{item?.price || 0}</p>
+                    {/* <p className={styles.price}>₹{item?.price || 0}</p> */}
                     <button
                       className={styles.addBtn}
                       onClick={() => {

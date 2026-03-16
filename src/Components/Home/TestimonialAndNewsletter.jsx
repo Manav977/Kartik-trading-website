@@ -39,7 +39,7 @@ const TestimonialAndNewsletter = () => {
       {/* Newsletter and Persistent Bottom Button Section */}
       <section className={styles.newsletterSection}>
         <div className={styles.newsletterContainer}>
-          <h2 className={styles.newsletterHeading}>Ghar Baithe Ration ke Offers Payein - Subscribe Karein!</h2>
+          <h2 className={styles.newsletterHeading}>"Get Exclusive Wholesale Offers Delivered to Your Inbox – Subscribe Now!"</h2>
           <form className={styles.subscriptionForm} onSubmit={handleSubscribe}>
             <input
               type="email"

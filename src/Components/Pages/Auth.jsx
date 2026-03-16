@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
 import styles from "./Auth.module.css";
 import { auth, googleProvider } from "../../Firebase";
 import {
@@ -20,25 +20,52 @@ const Auth = ({ isVisible, onClose }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (isVisible && !window.recaptchaVerifier) {
-      try {
-        window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-          size: "invisible",
-          callback: () => setError(""),
-          "expired-callback": () => setError("reCAPTCHA expired, please try again."),
-        });
-      } catch (err) {
-        console.error("Recaptcha init error:", err);
-      }
+  const recaptchaVerifierRef = useRef(null);
+  const recaptchaWidgetIdRef = useRef(null);
+
+  const resetRecaptchaWidget = useCallback(() => {
+    if (window.grecaptcha && recaptchaWidgetIdRef.current !== null) {
+      window.grecaptcha.reset(recaptchaWidgetIdRef.current);
     }
-    return () => {
-      if (window.recaptchaVerifier) {
-        window.recaptchaVerifier.clear();
-        window.recaptchaVerifier = null;
-      }
-    };
-  }, [isVisible]);
+  }, []);
+
+  const initRecaptcha = useCallback(() => {
+    if (recaptchaVerifierRef.current) return;
+
+    try {
+      recaptchaVerifierRef.current = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: () => {
+            console.log("reCAPTCHA solved");
+          },
+          "expired-callback": () => {
+            setError("reCAPTCHA expired. Please try again.");
+            resetRecaptchaWidget();
+          },
+        },
+      );
+
+      recaptchaVerifierRef.current
+        .render()
+        .then((widgetId) => {
+          recaptchaWidgetIdRef.current = widgetId;
+        })
+        .catch((err) => {
+          console.error("Recaptcha render failed:", err);
+        });
+    } catch (err) {
+      console.error("Recaptcha Init Error:", err);
+    }
+  }, [resetRecaptchaWidget, setError]);
+
+  useEffect(() => {
+    if (isVisible) {
+      initRecaptcha();
+    }
+  }, [isVisible, initRecaptcha]);
 
   if (!isVisible) return null;
 
@@ -58,11 +85,30 @@ const Auth = ({ isVisible, onClose }) => {
     setLoading(true);
     try {
       const formattedPhone = `+91${phone}`;
-      const confirmation = await signInWithPhoneNumber(auth, formattedPhone, window.recaptchaVerifier);
+      initRecaptcha();
+      const appVerifier = recaptchaVerifierRef.current;
+
+      if (!appVerifier) {
+        setError("reCAPTCHA is still loading. Please wait a moment.");
+        return;
+      }
+
+      const confirmation = await signInWithPhoneNumber(
+        auth,
+        formattedPhone,
+        appVerifier,
+      );
+
       setConfirmationResult(confirmation);
       setShowOTP(true);
     } catch (err) {
-      setError(err.code === "auth/too-many-requests" ? "Too many requests. Wait a bit." : "Error sending OTP.");
+      console.error("Auth Error:", err);
+      resetRecaptchaWidget();
+      if (err.code === "auth/too-many-requests") {
+        setError("Too many requests. Wait a bit.");
+      } else {
+        setError("Error sending OTP. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -79,10 +125,17 @@ const Auth = ({ isVisible, onClose }) => {
       }
       onClose();
     } catch (err) {
+      console.error("OTP verification failed:", err);
       setError("Wrong OTP! Try again.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleChangeNumber = () => {
+    setShowOTP(false);
+    setOtp("");
+    resetRecaptchaWidget();
   };
 
   return (
@@ -139,8 +192,6 @@ const Auth = ({ isVisible, onClose }) => {
             <button type="submit" className={styles.submitBtn} disabled={loading}>
               {loading ? "Please wait..." : (isLogin ? "Get Login OTP" : "Register & Get OTP")}
             </button>
-            {/* Hidden Recaptcha Div */}
-            <div id="recaptcha-container"></div>
           </form>
         ) : (
           <form className={styles.authForm} onSubmit={verifyOTP}>
@@ -149,13 +200,13 @@ const Auth = ({ isVisible, onClose }) => {
               <input type="text" placeholder="6-digit code" maxLength="6" value={otp} onChange={(e) => setOtp(e.target.value)} required />
             </div>
             <button type="submit" className={styles.submitBtn} disabled={loading}>Verify Now</button>
-            <p className={styles.resendText} onClick={() => setShowOTP(false)}>Wrong number? <span>Change</span></p>
+            <p className={styles.resendText} onClick={handleChangeNumber}>Wrong number? <span>Change</span></p>
           </form>
         )}
 
         <p className={styles.toggleText}>
           {isLogin ? "New user?" : "Already joined?"}
-          <span onClick={() => { setIsLogin(!isLogin); setShowOTP(false); setError(""); }}>
+          <span onClick={() => { setIsLogin(!isLogin); setShowOTP(false); setError(""); resetRecaptchaWidget(); }}>
             {isLogin ? " Create Account" : " Login"}
           </span>
         </p>
