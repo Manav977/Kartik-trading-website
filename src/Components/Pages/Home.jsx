@@ -13,7 +13,7 @@ function Home({ user }) {
       <section className={styles.productShortcut}>
         <div className={styles.contentBox}>
           {user ? (
-            <h2>Welcome Back, {user.displayName || 'Bhai'}!</h2>
+            <h2>Welcome Back, {user.displayName || 'User'}!</h2>
           ) : (
             <h2>Our Premium Collection</h2>
           )}

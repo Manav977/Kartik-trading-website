@@ -1,12 +1,15 @@
-import React, { useCallback, useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styles from "./Auth.module.css";
-import { auth, googleProvider } from "../../Firebase";
+import { auth, googleProvider, db } from "../../Firebase";
 import {
   signInWithPopup,
   RecaptchaVerifier,
   signInWithPhoneNumber,
   updateProfile,
+  signOut,
+  onAuthStateChanged
 } from "firebase/auth";
+import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 
 const Auth = ({ isVisible, onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -21,94 +24,77 @@ const Auth = ({ isVisible, onClose }) => {
   const [loading, setLoading] = useState(false);
 
   const recaptchaVerifierRef = useRef(null);
-  const recaptchaWidgetIdRef = useRef(null);
 
-  const resetRecaptchaWidget = useCallback(() => {
-    if (window.grecaptcha && recaptchaWidgetIdRef.current !== null) {
-      window.grecaptcha.reset(recaptchaWidgetIdRef.current);
+  const resetAuthStates = () => {
+    if (recaptchaVerifierRef.current) {
+      recaptchaVerifierRef.current.clear();
+      recaptchaVerifierRef.current = null;
     }
-  }, []);
-
-  const initRecaptcha = useCallback(() => {
-    if (recaptchaVerifierRef.current) return;
-
-    try {
-      recaptchaVerifierRef.current = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: () => {
-            console.log("reCAPTCHA solved");
-          },
-          "expired-callback": () => {
-            setError("reCAPTCHA expired. Please try again.");
-            resetRecaptchaWidget();
-          },
-        },
-      );
-
-      recaptchaVerifierRef.current
-        .render()
-        .then((widgetId) => {
-          recaptchaWidgetIdRef.current = widgetId;
-        })
-        .catch((err) => {
-          console.error("Recaptcha render failed:", err);
-        });
-    } catch (err) {
-      console.error("Recaptcha Init Error:", err);
-    }
-  }, [resetRecaptchaWidget, setError]);
+    setShowOTP(false);
+    setOtp("");
+    setError("");
+    setLoading(false);
+  };
 
   useEffect(() => {
-    if (isVisible) {
-      initRecaptcha();
-    }
-  }, [isVisible, initRecaptcha]);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user && isVisible) {
+        onClose();
+      }
+    });
+    return () => {
+      unsubscribe();
+      resetAuthStates();
+    };
+  }, [isVisible, onClose]);
 
   if (!isVisible) return null;
+
+  // FIXED: Ab agar user Firestore mein nahi bhi hoga, toh login block nahi karega
+  const handleUserPersistence = async (user) => {
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      // Naya user entry create karein agar database mein nahi hai
+      await setDoc(userRef, {
+        uid: user.uid,
+        displayName: name || user.displayName || "Business Partner",
+        email: email || user.email || "",
+        city: city || "Not Specified",
+        phoneNumber: user.phoneNumber,
+        role: "retailer",
+        createdAt: serverTimestamp(),
+      });
+    }
+  };
+
+  const setupRecaptcha = () => {
+    if (recaptchaVerifierRef.current) return recaptchaVerifierRef.current;
+    
+    recaptchaVerifierRef.current = new RecaptchaVerifier(auth, "recaptcha-container", {
+      size: "invisible",
+    });
+    return recaptchaVerifierRef.current;
+  };
 
   const sendOTP = async (e) => {
     e.preventDefault();
     setError("");
-
-    if (!isLogin && (!name || !email || !city)) {
-      setError("Please fill all details.");
-      return;
-    }
-    if (phone.length !== 10) {
-      setError("Enter a valid 10-digit number.");
-      return;
-    }
-
     setLoading(true);
+
     try {
       const formattedPhone = `+91${phone}`;
-      initRecaptcha();
-      const appVerifier = recaptchaVerifierRef.current;
+      const appVerifier = setupRecaptcha();
+      await appVerifier.render();
 
-      if (!appVerifier) {
-        setError("reCAPTCHA is still loading. Please wait a moment.");
-        return;
-      }
-
-      const confirmation = await signInWithPhoneNumber(
-        auth,
-        formattedPhone,
-        appVerifier,
-      );
-
+      const confirmation = await signInWithPhoneNumber(auth, formattedPhone, appVerifier);
       setConfirmationResult(confirmation);
       setShowOTP(true);
     } catch (err) {
-      console.error("Auth Error:", err);
-      resetRecaptchaWidget();
-      if (err.code === "auth/too-many-requests") {
-        setError("Too many requests. Wait a bit.");
-      } else {
-        setError("Error sending OTP. Please try again.");
-      }
+      console.error("OTP Error:", err);
+      resetAuthStates();
+      setError(err.code === "auth/too-many-requests" ? "Too many attempts. Try later." : "Verification failed. Try again.");
     } finally {
       setLoading(false);
     }
@@ -120,41 +106,52 @@ const Auth = ({ isVisible, onClose }) => {
     setLoading(true);
     try {
       const result = await confirmationResult.confirm(otp);
-      if (!isLogin && name) {
+      
+      // Profile name update karein turant
+      if (name) {
         await updateProfile(result.user, { displayName: name });
       }
+
+      await handleUserPersistence(result.user);
       onClose();
+      // Reload is necessary to force Header to catch the new state immediately
+      window.location.reload(); 
     } catch (err) {
-      console.error("OTP verification failed:", err);
-      setError("Wrong OTP! Try again.");
+      console.error("Verify Error:", err);
+      setError("Invalid OTP or Registration Error.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleChangeNumber = () => {
-    setShowOTP(false);
-    setOtp("");
-    resetRecaptchaWidget();
+  const handleGoogleLogin = async () => {
+    setError("");
+    setLoading(true);
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      await handleUserPersistence(result.user);
+      onClose();
+      window.location.reload();
+    } catch (err) {
+      setError(err.message || "Google login failed.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.authCard} onClick={(e) => e.stopPropagation()}>
+        <div id="recaptcha-container"></div>
+        
         <button className={styles.closeBtn} onClick={onClose}>&times;</button>
 
-        <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
-        <p className={styles.subtitle}>Enter details to access Kartik Trading dashboard</p>
+        <h2>{isLogin ? "B2B Partner Login" : "Wholesale Registration"}</h2>
+        <p className={styles.subtitle}>Kartik Trading Co. Business Dashboard</p>
 
         {error && <div className={styles.errorMessage}>{error}</div>}
 
-        <button onClick={() => signInWithPopup(auth, googleProvider).then(onClose)} className={styles.googleBtn}>
-          <svg width="18" height="18" viewBox="0 0 48 48">
-            <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" />
-            <path fill="#FF3D00" d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" />
-            <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" />
-            <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" />
-          </svg>
+        <button onClick={handleGoogleLogin} className={styles.googleBtn} disabled={loading}>
           Continue with Google
         </button>
 
@@ -166,16 +163,16 @@ const Auth = ({ isVisible, onClose }) => {
               <>
                 <div className={styles.inputGroup}>
                   <label>Full Name</label>
-                  <input type="text" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} required />
+                  <input type="text" placeholder="Owner/Manager Name" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
                 <div className={styles.gridInputs}>
                   <div className={styles.inputGroup}>
                     <label>Email</label>
-                    <input type="email" placeholder="mail@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <input type="email" placeholder="business@mail.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
                   </div>
                   <div className={styles.inputGroup}>
-                    <label>City</label>
-                    <input type="text" placeholder="Chandigarh" value={city} onChange={(e) => setCity(e.target.value)} required />
+                    <label>Business City</label>
+                    <input type="text" placeholder="Location" value={city} onChange={(e) => setCity(e.target.value)} required />
                   </div>
                 </div>
               </>
@@ -190,24 +187,26 @@ const Auth = ({ isVisible, onClose }) => {
             </div>
 
             <button type="submit" className={styles.submitBtn} disabled={loading}>
-              {loading ? "Please wait..." : (isLogin ? "Get Login OTP" : "Register & Get OTP")}
+              {loading ? "Please wait..." : (isLogin ? "Send Login OTP" : "Register Business")}
             </button>
           </form>
         ) : (
           <form className={styles.authForm} onSubmit={verifyOTP}>
             <div className={styles.inputGroup}>
-              <label>OTP Code</label>
-              <input type="text" placeholder="6-digit code" maxLength="6" value={otp} onChange={(e) => setOtp(e.target.value)} required />
+              <label>Verification Code</label>
+              <input type="text" placeholder="6-digit OTP" maxLength="6" value={otp} onChange={(e) => setOtp(e.target.value)} required />
             </div>
-            <button type="submit" className={styles.submitBtn} disabled={loading}>Verify Now</button>
-            <p className={styles.resendText} onClick={handleChangeNumber}>Wrong number? <span>Change</span></p>
+            <button type="submit" className={styles.submitBtn} disabled={loading}>Verify & Enter</button>
+            <p className={styles.resendText} onClick={() => setShowOTP(false)}>
+              Wrong number? <span>Edit</span>
+            </p>
           </form>
         )}
 
         <p className={styles.toggleText}>
-          {isLogin ? "New user?" : "Already joined?"}
-          <span onClick={() => { setIsLogin(!isLogin); setShowOTP(false); setError(""); resetRecaptchaWidget(); }}>
-            {isLogin ? " Create Account" : " Login"}
+          {isLogin ? "New user?" : "Existing partner?"}
+          <span onClick={() => { setIsLogin(!isLogin); setError(""); }}>
+            {isLogin ? " Register" : " Login"}
           </span>
         </p>
       </div>

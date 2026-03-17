@@ -6,7 +6,6 @@ const TestimonialAndNewsletter = () => {
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    console.log(`Subscribed with email: ${email}`);
     // Yahan newsletter subscription logic add kar sakte hain
     setEmail('');
   };

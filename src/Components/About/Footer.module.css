@@ -184,4 +184,8 @@
     flex-wrap: wrap;
     gap: 15px;
   }
+
+  .emailAddress{
+    font-size: 1rem;
+  }
 }

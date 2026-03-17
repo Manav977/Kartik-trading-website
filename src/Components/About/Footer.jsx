@@ -47,7 +47,7 @@ const Footer = () => {
         <div className={styles.contactSection}>
           <div className={styles.emailBlock}>
             <span className={styles.emailLabel}>Email Id</span>
-            <a href="mailto:info@kartiktrading.com" className={styles.emailAddress}>
+            <a href="mailto:kartiktradingcompany@gmail.com" className={styles.emailAddress}>
               kartiktradingcompany@gmail.com
             </a>
           </div>

@@ -1,0 +1,277 @@
+/* AdminPanel.module.css */
+
+:root {
+  --primary-dark: #002147;
+  --accent-gold: #ffcc00;
+  --bg-light: #f4f7f6;
+  --white: #ffffff;
+  --success-green: #2ecc71;
+  --error-red: #e74c3c;
+  --text-main: #334155;
+}
+
+.adminContainer {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-light);
+  font-family:
+    "Inter",
+    -apple-system,
+    sans-serif;
+}
+
+/* --- SIDEBAR (Desktop) --- */
+.sidebar {
+  width: 260px;
+  background-color: var(--primary-dark);
+  color: white;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.sidebar h2 {
+  font-size: 1.3rem;
+  color: var(--accent-gold);
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar button {
+  background: transparent;
+  border: none;
+  color: #cbd5e0;
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: 0.2s;
+}
+
+.sidebar button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.sidebar button.active {
+  background-color: #0056b3;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* --- MAIN CONTENT --- */
+.content {
+  flex: 1;
+  padding: 2rem;
+  overflow-x: hidden;
+}
+
+/* Notification Pop-up */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  z-index: 9999;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.success {
+  background-color: var(--success-green);
+}
+.error {
+  background-color: var(--error-red);
+}
+
+/* --- DASHBOARD CARDS --- */
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.itemCard {
+  background: white;
+  padding: 1.2rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #ddd;
+}
+
+.itemCard img {
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* --- ADD PRODUCT FORM --- */
+.addForm {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.addForm h3 {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.addForm input {
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  outline: none;
+}
+
+.addForm button {
+  grid-column: 1 / -1;
+  background: var(--success-green);
+  color: white;
+  font-weight: bold;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* --- TABLES (Orders & Products) --- */
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto; /* Mobile scroll fix */
+  background: white;
+  border-radius: 15px;
+  margin-top: 1rem;
+}
+
+.userTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px; 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.userTable th {
+  background: #f8fafc;
+  padding: 15px;
+  text-align: left;
+  font-size: 0.85rem;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.userTable td {
+  padding: 15px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.95rem;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+
+/* Tablet View */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 220px;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .adminContainer {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%; /* Puri width lega */
+    height: auto;
+    flex-direction: row;
+    padding: 10px;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+
+  .sidebar h2 {
+    display: none;
+  } /* Space bachaney ke liye */
+
+  .sidebar button {
+    padding: 10px 15px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .userTable {
+    max-width: 600px; /* Ye sabse zaruri hai! Taaki table shrink na ho */
+    width: 100%;
+    min-width: 0;
+  }
+  .content {
+    padding: 1rem;
+  }
+
+  .addForm {
+    grid-template-columns: 1fr;
+  }
+
+  .list {
+    grid-template-columns: 1fr;
+  }
+  .tableWrapper {
+    margin: 10px -12px; /* Content ki padding ko compensate karne ke liye side margin negative */
+    width: calc(100% + 24px);
+    overflow-x: auto; /* Ye scroll enable karega */
+    -webkit-overflow-scrolling: touch; /* Smooth scroll for iOS */
+    border-radius: 0; /* Mobile par full width clean dikhta hai */
+  }
+
+  .userTable th,
+  .userTable td {
+    padding: 10px; /* Space thodi kam mobile ke liye */
+    font-size: 0.85rem;
+  }
+
+  .userTable img {
+    width: 35px; /* Choti image mobile par */
+  }
+
+}

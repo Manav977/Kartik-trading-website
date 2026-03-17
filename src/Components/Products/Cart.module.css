@@ -254,6 +254,92 @@
   font-size: 1.4rem;
 }
 
+.footer {
+  padding: 20px;
+  border-top: 1px solid #eee;
+  background: #fff;
+}
+
+.addressSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 1px border #ececec;
+}
+
+.addressText {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.deliverLabel {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: block;
+}
+
+.actualAddress {
+  font-size: 13px;
+  color: #333;
+  margin: 3px 0 0 0;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 2 lines ke baad dot-dot dikhayega */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.changeAddressBtn {
+  background: #fff;
+  border: 1px solid #007bff;
+  color: #007bff;
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.changeAddressBtn:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+.checkoutBtn {
+  width: 100%;
+  background: #25d366; /* WhatsApp Green */
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.checkoutBtn:hover {
+  transform: scale(1.02);
+  background: #128c7e;
+}
+
+.actualAddress {
+  font-size: 0.9rem;
+  color: #333;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 2 line ke baad dots (...) aa jayenge */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 @media (max-width: 480px) {
   .cartDrawer {
     width: 100%; /* Mobile par full screen cart */

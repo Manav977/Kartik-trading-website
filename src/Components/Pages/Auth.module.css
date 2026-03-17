@@ -123,6 +123,11 @@
   margin-top: 10px;
 }
 
+.submitBtn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
 .errorMessage {
   background: #fee2e2;
   color: #dc2626;
@@ -156,6 +161,8 @@
   height: 30px;
   border-radius: 50%;
   cursor: pointer;
+  display: grid;
+  place-items: center;
 }
 
 /* reCAPTCHA Badge ko hide karne ke liye */
@@ -197,12 +204,32 @@
   border: 1px solid #feb2b2;
 }
 
-/* Mobile Fix */
-@media (max-width: 400px) {
+@media (max-width: 768px) {
+  .authCard {
+    max-width: 92vw;
+    padding: 24px;
+  }
+
   .gridInputs {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 480px) {
   .authCard {
-    padding: 20px;
+    padding: 18px;
+  }
+
+  .googleBtn {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .inputGroup input {
+    padding: 10px 12px;
+  }
+
+  .phoneInput span {
+    padding: 0 10px;
   }
 }

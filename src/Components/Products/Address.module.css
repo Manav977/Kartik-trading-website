@@ -1,0 +1,84 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85); /* Thoda dark background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Sabse upar dikhne ke liye */
+  backdrop-filter: blur(5px); /* Premium look */
+}
+
+.modal {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal h3 { margin-top: 0; color: #333; font-size: 1.5rem; }
+.modal p { color: #666; font-size: 0.9rem; margin-bottom: 20px; }
+
+.errorMessage {
+  color: #d64541;
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.modal input, .modal textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  font-size: 16px;
+  box-sizing: border-box; /* Padding box ke andar rahegi */
+}
+
+.modal input:focus, .modal textarea:focus {
+  border-color: #25d366;
+  outline: none;
+}
+
+.modal textarea { height: 100px; resize: none; }
+
+.btns { display: flex; gap: 12px; margin-top: 10px; }
+
+.cancel {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: #f1f1f1;
+  color: #555;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.submit {
+  flex: 2;
+  padding: 12px;
+  border: none;
+  background: #25d366;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.submit:hover { transform: scale(1.02); background: #21bd5c; }

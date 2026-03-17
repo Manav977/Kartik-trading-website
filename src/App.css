@@ -2,3 +2,99 @@
     padding: 0%;
     margin: 0%;
 }
+
+.custom-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999; /* Highest z-index */
+  padding: 12px 24px;
+  border-radius: 50px;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  animation: slideDown 0.4s ease-out;
+  min-width: 300px;
+  text-align: center;
+  justify-content: center;
+}
+
+/* Access Denied Styling */
+.access-denied-container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  background: #f8fafc;
+}
+
+.error-card {
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
+  width: 90%;
+}
+
+.lock-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.error-card h2 {
+  color: #e74c3c; /* Red color for Access Denied */
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+}
+
+.error-card h3 {
+  color: #64748b;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.back-home-btn {
+  display: inline-block;
+  background: #002147;
+  color: white !important;
+  padding: 12px 30px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 33, 71, 0.2);
+}
+
+.back-home-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 86, 179, 0.3);
+}
+
+.custom-toast.success { background: #2ecc71; }
+.custom-toast.error { background: #e74c3c; }
+.custom-toast.info { background: #3498db; }
+
+@keyframes slideDown {
+  from { top: -100px; opacity: 0; }
+  to { top: 20px; opacity: 1; }
+}
+
+.announcement-banner {
+  background: #ffcc00;
+  color: #002147;
+  padding: 5px 0;
+  font-weight: bold;
+}
+
