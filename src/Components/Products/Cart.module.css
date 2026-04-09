@@ -335,7 +335,7 @@
   color: #333;
   margin: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* 2 line ke baad dots (...) aa jayenge */
+  /* -webkit-line-clamp: 2; 2 line ke baad dots (...) aa jayenge */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
